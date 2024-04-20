@@ -1,5 +1,5 @@
 {
-	// hide misc files that we most likely don't need to see
+	// hide files that we usually don't need to see in explorer
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,
@@ -9,10 +9,7 @@
 		"**/Thumbs.db": true,
 
 		"**/.svelte-kit": true,
-		"**/out": true,
-		"**/build": true,
 		"**/node_modules": true,
-
 		"pnpm-lock.yaml": true,
 		".editorconfig": true,
 		".eslintignore": true,
