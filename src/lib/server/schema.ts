@@ -7,6 +7,10 @@ export const users = pgTable("users", {
 	lastName: text("last_name"),
 	avatarUrl: text("avatar_url"),
 	email: text("email").unique().notNull(),
+
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+	setupAt: timestamp("setup_at"),
+	termsAcceptedAt: timestamp("terms_accepted_at"),
 });
 
 export const oauthAccounts = pgTable(
