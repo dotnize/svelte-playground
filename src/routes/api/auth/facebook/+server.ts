@@ -6,9 +6,7 @@ import { facebook } from "$lib/server/auth";
 export async function GET(event: RequestEvent): Promise<Response> {
 	const state = generateState();
 
-	const url = await facebook.createAuthorizationURL(state, {
-		scopes: ["public_profile", "email"],
-	});
+	const url = facebook.createAuthorizationURL(state, ["public_profile", "email"]);
 
 	event.cookies.set("facebook_oauth_state", state, {
 		path: "/",

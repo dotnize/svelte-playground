@@ -11,30 +11,21 @@
 		"**/.svelte-kit": true,
 		"**/node_modules": true,
 		"pnpm-lock.yaml": true,
-		".editorconfig": true,
-		".eslintignore": true,
-		".eslintrc.cjs": true,
-		".prettierignore": true,
+		".npmrc": true,
 		".gitattributes": true,
+		".editorconfig": true,
+		"eslint.config.js": true,
+		".prettierignore": true,
 		".prettierrc": true,
 		"postcss.config.js": true
 	},
-
-	// always choose typescript from node_modules
-	"typescript.tsdk": "./node_modules/typescript/lib",
 
 	// use LF line endings
 	"files.eol": "\n",
 
 	// more readable tabs
 	"workbench.editor.customLabels.patterns": {
-		"**/routes/**/+page.svelte": "${dirname}/+page.${extname}",
-		"**/routes/**/+layout.svelte": "${dirname}/+layout.${extname}",
-		"**/routes/**/+page.ts": "${dirname}/+page.${extname}",
-		"**/routes/**/+layout.ts": "${dirname}/+layout.${extname}",
-		"**/routes/**/+server.ts": "${dirname}/+server.${extname}",
-		"**/routes/**/+page.server.ts": "${dirname}/+page.server.${extname}",
-		"**/routes/**/+layout.server.ts": "${dirname}/+layout.server.${extname}"
+		"**/routes/**/+*.*": "${dirname}/${filename}.${extname}"
 	},
 
 	// smol performance improvements

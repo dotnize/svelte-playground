@@ -2,7 +2,7 @@ import { error, redirect, type RequestEvent } from "@sveltejs/kit";
 
 import { lucia } from "$lib/server/auth";
 
-export async function GET(event: RequestEvent): Promise<Response> {
+export async function POST(event: RequestEvent): Promise<Response> {
 	if (!event.locals.session) {
 		return error(401);
 	}
