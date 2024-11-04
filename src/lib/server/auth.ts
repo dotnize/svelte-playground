@@ -1,53 +1,29 @@
-import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { Facebook, GitHub, Google } from "arctic";
-import { Lucia } from "lucia";
-
-import { dev } from "$app/environment";
-import {
-	FACEBOOK_CLIENT_ID,
-	FACEBOOK_CLIENT_SECRET,
-	FACEBOOK_REDIRECT_URI,
-	GITHUB_CLIENT_ID,
-	GITHUB_CLIENT_SECRET,
-	GITHUB_REDIRECT_URI,
-	GOOGLE_CLIENT_ID,
-	GOOGLE_CLIENT_SECRET,
-	GOOGLE_REDIRECT_URI,
-} from "$env/static/private";
-
+import { env } from "$env/dynamic/private";
+import { PUBLIC_BASE_URL } from "$env/static/public";
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "./db";
-import { sessions, users, type User as DatabaseUser } from "./schema";
 
-const adapter = new DrizzlePostgreSQLAdapter(db, sessions, users);
-
-export const lucia = new Lucia(adapter, {
-	sessionCookie: {
-		attributes: {
-			secure: !dev,
+export const auth = betterAuth({
+	database: drizzleAdapter(db, {
+		provider: "pg",
+	}),
+	emailAndPassword: {
+		enabled: false,
+	},
+	socialProviders: {
+		discord: {
+			clientId: env.DISCORD_CLIENT_ID!,
+			clientSecret: env.DISCORD_CLIENT_SECRET!,
+		},
+		github: {
+			clientId: env.GITHUB_CLIENT_ID!,
+			clientSecret: env.GITHUB_CLIENT_SECRET!,
+		},
+		google: {
+			clientId: env.GOOGLE_CLIENT_ID!,
+			clientSecret: env.GOOGLE_CLIENT_SECRET!,
 		},
 	},
-	getUserAttributes: (attr) => ({
-		id: attr.id,
-		name: attr.name,
-		firstName: attr.firstName,
-		lastName: attr.lastName,
-		avatarUrl: attr.avatarUrl,
-		email: attr.email,
-	}),
+	baseURL: PUBLIC_BASE_URL,
 });
-
-declare module "lucia" {
-	interface Register {
-		Lucia: typeof lucia;
-		DatabaseUserAttributes: DatabaseUser;
-	}
-}
-
-// OAuth2 Providers
-export const facebook = new Facebook(
-	FACEBOOK_CLIENT_ID,
-	FACEBOOK_CLIENT_SECRET,
-	FACEBOOK_REDIRECT_URI
-);
-export const github = new GitHub(GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_REDIRECT_URI);
-export const google = new Google(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI);
