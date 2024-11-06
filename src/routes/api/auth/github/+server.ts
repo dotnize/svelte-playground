@@ -4,6 +4,15 @@ import { generateState } from "arctic";
 import { github } from "$lib/server/auth";
 
 export async function GET(event: RequestEvent): Promise<Response> {
+	if (event.locals.user) {
+		return new Response(null, {
+			status: 302,
+			headers: {
+				Location: "/dashboard",
+			},
+		});
+	}
+
 	const state = generateState();
 
 	const url = github.createAuthorizationURL(state, ["user:email"]);

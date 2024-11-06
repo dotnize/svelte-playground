@@ -4,6 +4,15 @@ import { generateCodeVerifier, generateState } from "arctic";
 import { google } from "$lib/server/auth";
 
 export async function GET(event: RequestEvent): Promise<Response> {
+	if (event.locals.user) {
+		return new Response(null, {
+			status: 302,
+			headers: {
+				Location: "/dashboard",
+			},
+		});
+	}
+
 	const state = generateState();
 	const codeVerifier = generateCodeVerifier();
 
