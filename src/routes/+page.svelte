@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { authClient } from "$lib/auth-client";
 	import { Button } from "$lib/components/ui/button";
+	import type { PageData } from "./$types";
 
-	const session = authClient.useSession;
+	let { data }: { data: PageData } = $props();
 </script>
 
 <div class="flex flex-col gap-4 p-6">
@@ -14,21 +14,17 @@
 		</div>
 	</div>
 
-	{#if $session.data}
+	{#if data.user}
 		<div class="flex flex-col gap-2">
-			<p>Welcome back, {$session.data.user.name}!</p>
+			<p>Welcome back, {data.user.name}!</p>
 			<Button href="/dashboard" class="w-fit" size="lg">Go to Dashboard</Button>
 			<div>
 				More data from auth client:
-				<pre>{JSON.stringify($session.data.user, null, 2)}</pre>
+				<pre>{JSON.stringify(data.user, null, 2)}</pre>
 			</div>
-			<Button
-				type="button"
-				onclick={() => authClient.signOut()}
-				class="w-fit"
-				variant="destructive"
-				size="lg">Sign out</Button
-			>
+			<form method="POST" action="/api/auth/logout">
+				<Button type="submit" class="w-fit" variant="destructive" size="lg">Sign out</Button>
+			</form>
 		</div>
 	{:else}
 		<div class="flex flex-col gap-2">
