@@ -20,6 +20,7 @@
 		"@types/eslint": "^9.6.1",
 		"@types/node": "^22.9.0",
 		"autoprefixer": "^10.4.20",
+		"bits-ui": "next",
 		"clsx": "^2.1.1",
 		"drizzle-kit": "^0.27.1",
 		"eslint": "^9.14.0",
@@ -43,7 +44,6 @@
 		"@oslojs/crypto": "^1.0.1",
 		"@oslojs/encoding": "^1.1.0",
 		"arctic": "^2.2.1",
-		"bits-ui": "next",
 		"drizzle-orm": "^0.36.0",
 		"postgres": "^3.4.5"
 	}
